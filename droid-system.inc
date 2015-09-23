@@ -1,3 +1,10 @@
+%define __find_provides %{nil}
+%define __find_requires %{nil}
+%define __strip /bin/true
+%define __provides_exclude_from ^/system/.*$
+%define __requires_exclude ^.*$
+%global debug_package %{nil}
+
 %if 0%{!?rpm_device:1}
 %define rpm_device %{device}
 %endif
