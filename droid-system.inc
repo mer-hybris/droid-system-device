@@ -8,10 +8,13 @@
 %if 0%{!?rpm_device:1}
 %define rpm_device %{device}
 %endif
+%if 0%{!?dsd_path:1}
+%define dsd_path .
+%endif
 
-Name:	    droid-system-%{rpm_device}
-Provides:   droid-system
-Summary:    System package for Droid HAL adaptations
+Name:       droid-system%{variant}-%{rpm_device}
+Provides:   droid-system%{variant}
+Summary:    System%{variant} package for Droid HAL adaptations
 Version:    1
 Release:    1
 Group:      Development/Tools
