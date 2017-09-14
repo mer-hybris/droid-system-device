@@ -8,6 +8,9 @@
 %if 0%{!?rpm_device:1}
 %define rpm_device %{device}
 %endif
+%if 0%{!?dsd_path:1}
+%define dsd_path .
+%endif
 
 Name:	    droid-system-%{rpm_device}
 Provides:   droid-system
