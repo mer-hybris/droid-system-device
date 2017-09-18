@@ -17,6 +17,8 @@ Release:    1
 Group:      Development/Tools
 License:    Proprietary
 Source0:    %{name}-%{version}.tar.bz2
+Source1:    droid-system-%{rpm_device}-rpmlintrc
+URL:        https://bitbucket.org/jolla/hw-droid-system-device.git
 %description
 %{summary}.
 
@@ -25,6 +27,9 @@ Source0:    %{name}-%{version}.tar.bz2
 # For OBS builds we need to have tarball extracted after tar_git packaging it
 %setup -q -n %{name}-%{version}
 %endif
+
+# This section is empty by purpose
+%build
 
 %install
 rm -rf %{buildroot}
