@@ -11,6 +11,9 @@
 %if 0%{!?dsd_path:1}
 %define dsd_path .
 %endif
+%if 0%{!?variant:1}
+%define variant ""
+%endif
 
 Name:       droid-system%{variant}-%{rpm_device}
 Provides:   droid-system%{variant}
@@ -20,7 +23,7 @@ Release:    1
 Group:      Development/Tools
 License:    Proprietary
 Source0:    %{name}-%{version}.tar.bz2
-Source1:    droid-system-%{rpm_device}-rpmlintrc
+Source1:    droid-system%{variant}-%{rpm_device}-rpmlintrc
 URL:        https://bitbucket.org/jolla/hw-droid-system-device.git
 %description
 %{summary}.
