@@ -51,7 +51,7 @@ echo "%defattr(-,root,root,-)" > tmp/droid-system.files
 copy_files_from() {
   source_dir=$1
   if [ -d $source_dir ]; then
-    (cd $source_dir; find . \( -type f -or -type l \) -print ) | sed 's/^.//' >> tmp/droid-system.files
+    (cd $source_dir; find . \( -type f -o -type l \) -print ) | sed 's/^.//' >> tmp/droid-system.files
     cp -R $source_dir/* $RPM_BUILD_ROOT/
   fi
 }
