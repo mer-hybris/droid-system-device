@@ -9,6 +9,7 @@ if [ "$SYSTEM_SPARSE" == "" ]; then
     exit 1
 fi
 
+rm -rf `find $SYSTEM_SPARSE -name "*.apk"`
 rm -rf `find $SYSTEM_SPARSE -name .gitignore`
 rm -rf $SYSTEM_SPARSE/app
 rm -rf $SYSTEM_SPARSE/bin/apedata_mount.sh
