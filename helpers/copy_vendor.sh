@@ -23,7 +23,11 @@ POST_RULES=$(tempfile)
 POST_SECTION_CREATED=0
 
 # Add read permission for some binaries under vendor mount
-source helpers/fixup-permissions.sh
+if [ -f helpers/fixup-permissions.sh ]; then
+    source helpers/fixup-permissions.sh
+else
+    source droid-system-device/helpers/fixup-permissions.sh
+fi
 
 # Remove current sparse and create it again
 rm -rf $VENDOR_SPARSE
@@ -56,7 +60,11 @@ find . -exec getcap {} + 2>/dev/null | awk '{ print "[ -e /vendor/"$1" ] && " "s
 popd 1>/dev/null
 
 # Remove generic unused directories and files
-source helpers/remove-unused.sh
+if [ -f helpers/remove-unused.sh ]; then
+    source helpers/remove-unused.sh
+else
+    source droid-system-device/helpers/remove-unused.sh
+fi
 
 # Move build.prop to proper place
 DEVICE=$(grep ro.vendor.product.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)

@@ -1,5 +1,15 @@
 # Remove unused files, or files that should not be used
 
+if [ "$SYSTEM_SPARSE" == "" ]; then
+    SYSTEM_SPARSE=$VENDOR_SPARSE
+fi
+
+if [ "$SYSTEM_SPARSE" == "" ]; then
+    echo "SYSTEM_SPARSE and VENDOR_SPARSE are unset!"
+    exit 1
+fi
+
+rm -rf `find $SYSTEM_SPARSE -name "*.apk"`
 rm -rf `find $SYSTEM_SPARSE -name .gitignore`
 rm -rf $SYSTEM_SPARSE/app
 rm -rf $SYSTEM_SPARSE/bin/apedata_mount.sh
