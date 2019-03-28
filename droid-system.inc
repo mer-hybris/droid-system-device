@@ -28,6 +28,18 @@ URL:        https://bitbucket.org/jolla/hw-droid-system-device.git
 %description
 %{summary}.
 
+%if 0%{?out_of_image_files:1}
+
+%package out-of-image-files
+Group:	System
+BuildArch: noarch
+Summary: Files that are used for flashing, serial number writing etc.
+
+%description out-of-image-files
+%{summary}. They are distributed alongside flashable images.
+
+%endif
+
 %prep
 %if 0%{?_obs_build_project:1}
 # For OBS builds we need to have tarball extracted after tar_git packaging it
@@ -74,6 +86,16 @@ delete_files() {
 copy_files_from %{dsd_path}/sparse
 delete_files tmp/droid-system.files delete_file.list 1
 
+%if 0%{?out_of_image_files:1}
+if [ -e out-of-image-files.files ]; then
+  cp out-of-image-files.files tmp/out-of-image-files.files
+fi
+%endif
+
 %files -f tmp/droid-system.files
 %defattr(-,root,root,-)
+
+%if 0%{?out_of_image_files:1}
+%files out-of-image-files -f tmp/out-of-image-files.files
+%endif
 
