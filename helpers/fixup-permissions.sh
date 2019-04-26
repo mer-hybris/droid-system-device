@@ -12,4 +12,6 @@ sudo chmod a+r $SYSTEM_MOUNT/bin/webview_zygote32
 sudo chmod a+r $SYSTEM_MOUNT/bin/webview_zygote64
 sudo chmod a+r $SYSTEM_MOUNT/build.prop
 sudo chmod a+r $SYSTEM_MOUNT/etc/prop.default
+sudo chmod a+r $SYSTEM_MOUNT/bin/secilc
+sudo chmod a+r $SYSTEM_MOUNT/etc/fs_config_dirs
 
