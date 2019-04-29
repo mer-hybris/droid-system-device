@@ -24,4 +24,6 @@ sudo chmod a+r $SYSTEM_MOUNT/build.prop
 sudo chmod a+r $SYSTEM_MOUNT/etc/prop.default
 sudo chmod a+r $SYSTEM_MOUNT/default.prop
 sudo chmod a+r $SYSTEM_MOUNT/bin/hw/android.hardware*
+sudo chmod a+r $SYSTEM_MOUNT/bin/secilc
+sudo chmod a+r $SYSTEM_MOUNT/etc/fs_config_dirs
 
