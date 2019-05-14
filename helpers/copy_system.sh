@@ -70,3 +70,9 @@ fi
 DEVICE=$(grep ro.product.name $SYSTEM_SPARSE/build.prop | cut -d '_' -f2)
 mkdir -p $DEVICE/system
 mv $SYSTEM_SPARSE/build.prop $DEVICE/system
+
+# Apply patches if exist
+if [ -d patches ]; then
+    echo "Apply patches:"
+    find patches/* | xargs patch -p1 -i
+fi
