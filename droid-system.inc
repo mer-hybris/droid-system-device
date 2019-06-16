@@ -24,7 +24,7 @@ Group:      Development/Tools
 License:    Proprietary
 Source0:    %{name}-%{version}.tar.bz2
 Source1:    droid-system%{variant}-%{rpm_device}-rpmlintrc
-URL:        https://bitbucket.org/jolla/hw-droid-system-device.git
+URL:        https://github.com/mer-hybris/droid-system-device
 %description
 %{summary}.
 
