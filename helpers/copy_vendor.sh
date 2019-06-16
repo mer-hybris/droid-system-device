@@ -68,5 +68,8 @@ fi
 
 # Move build.prop to proper place
 DEVICE=$(grep ro.vendor.product.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
+if [ -z $DEVICE ]; then
+    DEVICE=$(grep ro.product.vendor.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
+fi
 mkdir -p $DEVICE/vendor
 mv $VENDOR_SPARSE/build.prop $DEVICE/vendor
