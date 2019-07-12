@@ -66,10 +66,11 @@ else
     source droid-system-device/helpers/remove-unused.sh
 fi
 
-# Move build.prop to proper place
+# Move build.prop and prop.default to proper place
 DEVICE=$(grep ro.product.name $SYSTEM_SPARSE/build.prop | cut -d '_' -f2)
-mkdir -p $DEVICE/system
+mkdir -p $DEVICE/system/etc
 mv $SYSTEM_SPARSE/build.prop $DEVICE/system
+mv $SYSTEM_SPARSE/etc/prop.default $DEVICE/system/etc/prop.default
 
 # Apply patches if exist
 if [ -d patches ]; then
