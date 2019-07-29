@@ -66,6 +66,10 @@ else
     source droid-system-device/helpers/remove-unused.sh
 fi
 
+# General patches
+echo "Apply general patches:"
+source droid-system-device/helpers/general-patches.sh
+
 # Move build.prop to proper place
 DEVICE=$(grep ro.vendor.product.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
 if [ -z $DEVICE ]; then
