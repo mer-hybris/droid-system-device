@@ -70,13 +70,17 @@ fi
 echo "Apply general patches:"
 source droid-system-device/helpers/general-patches.sh
 
-# Move build.prop to proper place
-DEVICE=$(grep ro.vendor.product.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
-if [ -z $DEVICE ]; then
-    DEVICE=$(grep ro.product.vendor.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
+# Move build.prop to proper place if spec file has multiple_rpms definition
+if grep -q "%define multiple_rpms 1" "$MODIFY_SPEC"; then
+    if [ -f $VENDOR_SPARSE/build.prop ]; then
+        DEVICE=$(grep ro.vendor.product.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
+        if [ -z $DEVICE ]; then
+            DEVICE=$(grep ro.product.vendor.name $VENDOR_SPARSE/build.prop | cut -d '_' -f2)
+        fi
+        mkdir -p $DEVICE/vendor
+        mv $VENDOR_SPARSE/build.prop $DEVICE/vendor
+    fi
 fi
-mkdir -p $DEVICE/vendor
-mv $VENDOR_SPARSE/build.prop $DEVICE/vendor
 
 # Move Vendor Interface Object manifest to proper place
 if [ -f $VENDOR_SPARSE/etc/vintf/manifest.xml ]; then
