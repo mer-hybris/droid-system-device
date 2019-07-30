@@ -70,11 +70,18 @@ fi
 echo "Apply general patches:"
 source droid-system-device/helpers/general-patches.sh
 
-# Move build.prop and prop.default to proper place
-DEVICE=$(grep ro.product.name $SYSTEM_SPARSE/build.prop | cut -d '_' -f2)
-mkdir -p $DEVICE/system/etc
-mv $SYSTEM_SPARSE/build.prop $DEVICE/system
-mv $SYSTEM_SPARSE/etc/prop.default $DEVICE/system/etc/prop.default
+# Move build.prop and prop.default to proper place if spec file has multiple_rpms definition
+if grep -q "%define multiple_rpms 1" "$MODIFY_SPEC"; then
+    if [ -f $SYSTEM_SPARSE/build.prop ]; then
+        DEVICE=$(grep ro.product.name $SYSTEM_SPARSE/build.prop | cut -d '_' -f2)
+        mkdir -p $DEVICE/system
+        mv $SYSTEM_SPARSE/build.prop $DEVICE/system
+        if [ -f $SYSTEM_SPARSE/etc/prop.default ]; then
+            mkdir -p $DEVICE/system/etc
+            mv $SYSTEM_SPARSE/etc/prop.default $DEVICE/system/etc/prop.default
+        fi
+    fi
+fi
 
 # Apply patches if exist
 if [ -d patches ]; then
