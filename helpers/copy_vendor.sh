@@ -87,3 +87,9 @@ if [ -f $VENDOR_SPARSE/etc/vintf/manifest.xml ]; then
     mkdir -p $DEVICE/vendor/etc/vintf
     mv $VENDOR_SPARSE/etc/vintf/manifest.xml $DEVICE/vendor/etc/vintf/manifest.xml
 fi
+
+# Apply patches if exist
+if [ -d patches ]; then
+    echo "Apply patches:"
+    find patches/* | xargs patch -p1 -i
+fi
