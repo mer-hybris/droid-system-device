@@ -19,7 +19,7 @@ fi
 SYSTEM_SPARSE="sparse/system"
 SYSTEM_MOUNT=$1
 MODIFY_SPEC=$(readlink -f $2)
-POST_RULES=$(tempfile)
+POST_RULES=$(mktemp)
 POST_SECTION_CREATED=0
 
 # Add read permission for some binaries under system mount
