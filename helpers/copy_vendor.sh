@@ -80,12 +80,12 @@ if grep -q "%define multiple_rpms 1" "$MODIFY_SPEC"; then
         mkdir -p $DEVICE/vendor
         mv $VENDOR_SPARSE/build.prop $DEVICE/vendor
     fi
-fi
 
-# Move Vendor Interface Object manifest to proper place
-if [ -f $VENDOR_SPARSE/etc/vintf/manifest.xml ]; then
-    mkdir -p $DEVICE/vendor/etc/vintf
-    mv $VENDOR_SPARSE/etc/vintf/manifest.xml $DEVICE/vendor/etc/vintf/manifest.xml
+    # Move Vendor Interface Object manifest to proper place
+    if [ -f $VENDOR_SPARSE/etc/vintf/manifest.xml ]; then
+        mkdir -p $DEVICE/vendor/etc/vintf
+        mv $VENDOR_SPARSE/etc/vintf/manifest.xml $DEVICE/vendor/etc/vintf/manifest.xml
+    fi
 fi
 
 # Apply patches if exist
