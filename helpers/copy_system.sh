@@ -83,5 +83,7 @@ fi
 # Apply patches if exist
 if [ -d patches ]; then
     echo "Apply patches:"
-    find patches/* | xargs patch -p1 -i
+    for p in patches/*; do
+        patch -p1 -f -i "$p"
+    done
 fi
