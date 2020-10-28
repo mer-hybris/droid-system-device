@@ -11,21 +11,25 @@ if [ "$SYSTEM_MOUNT" == "" ]; then
     exit 1
 fi
 
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/run-as
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/uncrypt
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/netcfg
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/install-recovery.sh
-sudo chmod a+r "$SYSTEM_MOUNT"/etc/dhcpcd/dhcpcd-run-hooks
-sudo chmod a+r "$SYSTEM_MOUNT"/etc/partition_permission.sh
-sudo chmod a+r "$SYSTEM_MOUNT"/etc/wide-dhcpv6/dhcp6c.script
-sudo chmod a+r "$SYSTEM_MOUNT"/xbin/su
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/logd
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/webview_zygote32
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/webview_zygote64
-sudo chmod a+r "$SYSTEM_MOUNT"/build.prop
-sudo chmod a+r "$SYSTEM_MOUNT"/etc/prop.default
-sudo chmod a+r "$SYSTEM_MOUNT"/default.prop
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/hw/android.hardware*
-sudo chmod a+r "$SYSTEM_MOUNT"/bin/secilc
-sudo chmod a+r "$SYSTEM_MOUNT"/etc/fs_config_dirs
+fixup() {
+    f=$SYSTEM_MOUNT/$1
+    [ -f "$f" ] && sudo chmod a+r "$f"
+}
 
+fixup bin/run-as
+fixup bin/uncrypt
+fixup bin/netcfg
+fixup bin/install-recovery.sh
+fixup etc/dhcpcd/dhcpcd-run-hooks
+fixup etc/partition_permission.sh
+fixup etc/wide-dhcpv6/dhcp6c.script
+fixup xbin/su
+fixup bin/logd
+fixup bin/webview_zygote32
+fixup bin/webview_zygote64
+fixup build.prop
+fixup etc/prop.default
+fixup default.prop
+fixup bin/hw/android.hardware*
+fixup bin/secilc
+fixup etc/fs_config_dirs
