@@ -90,6 +90,9 @@ if grep -q "%define multiple_rpms 1" "$modify_spec"; then
         if [ -f "$TREE_SPARSE"/build.prop ]; then
             DEVICE=$(grep ro.product.name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
             if [ -z "$DEVICE" ]; then
+                DEVICE=$(grep ro.product.system.name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
+            fi
+            if [ -z "$DEVICE" ]; then
                 echo "Could not parse device name from $TREE_SPARSE/build.prop"
                 exit 1
             fi
