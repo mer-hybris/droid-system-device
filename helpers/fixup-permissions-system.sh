@@ -2,17 +2,13 @@
 
 # Add read permission for some binaries under system mount
 
-if [ "$SYSTEM_MOUNT" == "" ]; then
-    SYSTEM_MOUNT=$VENDOR_MOUNT
-fi
-
-if [ "$SYSTEM_MOUNT" == "" ]; then
-    echo "SYSTEM_MOUNT and VENDOR_MOUNT are unset!"
+if [ "$TREE_MOUNT" = "" ]; then
+    echo "TREE_MOUNT is unset!"
     exit 1
 fi
 
 fixup() {
-    f=$SYSTEM_MOUNT/$1
+    f=$TREE_MOUNT/$1
     [ -f "$f" ] && sudo chmod a+r "$f"
 }
 

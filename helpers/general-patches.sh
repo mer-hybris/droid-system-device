@@ -6,7 +6,7 @@
 
 patch_file="init.wod.rc"
 echo "Finding $patch_file"
-patch_file_path=$(find "$SYSTEM_SPARSE" -type f -name $patch_file)
+patch_file_path=$(find "$TREE_SPARSE" -type f -name $patch_file)
 if [ ! -z "$patch_file_path" ]; then
   echo "Patching file $patch_file_path"
   sed -i -e 's!mkdir /dev/net/ 0700 root root!mkdir /dev/net/ 0755 root root!g' "$patch_file_path"
