@@ -23,7 +23,7 @@ Release:    1
 Group:      Development/Tools
 License:    Proprietary
 Source0:    %{name}-%{version}.tar.bz2
-Source1:    droid-system%{variant}-%{rpm_device}-rpmlintrc
+Source1:    droid-system%{variant}-rpmlintrc
 URL:        https://github.com/mer-hybris/droid-system-device
 %description
 %{summary}.
