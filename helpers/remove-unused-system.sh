@@ -7,8 +7,8 @@ if [ -z "$TREE_SPARSE" ]; then
     exit 1
 fi
 
-rm -rf "$(find "$TREE_SPARSE" -name "*.apk")"
-rm -rf "$(find "$TREE_SPARSE" -name .gitignore)"
+find "$TREE_SPARSE" -name "*.apk" -delete
+find "$TREE_SPARSE" -name .gitignore -delete
 rm -rf "$TREE_SPARSE"/app
 rm -rf "$TREE_SPARSE"/bin/apedata_mount.sh
 rm -rf "$TREE_SPARSE"/bin/exp-log.sh
