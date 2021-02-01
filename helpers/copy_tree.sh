@@ -64,7 +64,7 @@ echo "Copy $TREE_MOUNT/* to $TREE_SPARSE"
 rsync -a --exclude="lost+found" "$TREE_MOUNT"/* "$TREE_SPARSE"
 
 pushd "$TREE_MOUNT" 1>/dev/null || exit
-find . \( -uid +0 -or -gid +0 \) -and \( -type f -or -type d -or -type s \) -printf "[ -e /$TREE/%P ] && chown %U:%G /$TREE/%P\n" 2>/dev/null | LC_ALL="C" sort > "$post_rules"
+find . \( -uid +0 -or -gid +0 \) -and \( -type f -or -type d -or -type s \) -printf "[ -e /$TREE/%P ] && chown %U:%G /$TREE/%P ||:\n" 2>/dev/null | LC_ALL="C" sort > "$post_rules"
 popd 1>/dev/null || exit
 
 if [ "$(wc -l < "$post_rules")" -gt 0 ]; then
