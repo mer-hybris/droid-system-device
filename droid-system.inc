@@ -21,7 +21,11 @@ Summary:    System%{variant} package for Droid HAL adaptations
 Version:    1
 Release:    1
 Group:      Development/Tools
+%if 0%{?system_license:1}
+License:    %{system_license}
+%else
 License:    Proprietary
+%endif
 Source0:    %{name}-%{version}.tar.bz2
 Source1:    droid-system%{variant}-rpmlintrc
 URL:        https://github.com/mer-hybris/droid-system-device
