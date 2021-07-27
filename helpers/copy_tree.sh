@@ -84,6 +84,12 @@ source "$(get_closest helpers/remove-unused-"$TREE".sh)"
 echo "Apply general patches:"
 source droid-system-device/helpers/general-patches.sh
 
+# Strip username present at buildtime
+sed -e "s/$(id -u -n )/abuild/g" -i "$TREE_SPARSE"/build.prop
+
+# Strip hostname present at buildtime
+sed -e "s/$(hostname)/abuilder/g" -i "$TREE_SPARSE"/build.prop
+
 # Move build.prop to proper place if spec file has multiple_rpms definition
 if grep -q "%define multiple_rpms 1" "$modify_spec"; then
     if [ "$TREE" = "system" ]; then
