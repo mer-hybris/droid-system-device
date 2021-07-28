@@ -153,6 +153,11 @@ if grep -q "%define multiple_rpms 1" "$modify_spec"; then
             fi
             mkdir -p "$DEVICE"/vendor
             mv "$TREE_SPARSE"/build.prop "$DEVICE"/vendor
+
+            if [ -f "$TREE_SPARSE"/odm/etc/build.prop ]; then
+                mkdir -p "$DEVICE"/vendor/odm/etc
+                mv "$TREE_SPARSE"/odm/etc/build.prop "$DEVICE"/vendor/odm/etc
+            fi
         fi
 
         # Move Vendor Interface Object manifest to proper place
