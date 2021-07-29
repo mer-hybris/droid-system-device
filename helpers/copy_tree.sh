@@ -3,8 +3,6 @@
 #
 # Before running this script please extract raw images and mount them.
 # Pass them as parameters to this script.
-# Make sure to pass ~/system first to copy_tree.sh, this is needed for
-# removing the ro.build.host and ro.build.user properly from ~/vendor.
 #
 # 1. "simg2img system.img system.raw"
 # 2. "simg2img vendor.img vendor.raw"
@@ -65,9 +63,10 @@ echo "%post" >> "$modify_spec"
 BUILD_HOST_REPLACEMENT=$(grep "%define build_host_replacement" "$modify_spec" | cut -d ' ' -f3)
 BUILD_USER_REPLACEMENT=$(grep "%define build_user_replacement" "$modify_spec" | cut -d ' ' -f3)
 
-if [ -n "$BUILD_HOST_REPLACEMENT" ] && [[ ${trees[0]//\//} != *system ]]; then
-    echo "Make sure to pass .../system (avoid final slash) argument first to this script,
-    echo "this is needed for removing the ro.build.host and ro.build.user properly from
+if [[ ( -n "$BUILD_HOST_REPLACEMENT" || -n "$BUILD_USER_REPLACEMENT" ) \
+      && ${trees[0]//\//} != *system ]]; then
+    echo "Make sure to pass .../system (avoid final slash) argument first to this script,"
+    echo "this is needed for removing the ro.build.host and ro.build.user properly from"
     echo ".../vendor."
     exit 1
 fi
@@ -153,6 +152,11 @@ if grep -q "%define multiple_rpms 1" "$modify_spec"; then
             fi
             mkdir -p "$DEVICE"/vendor
             mv "$TREE_SPARSE"/build.prop "$DEVICE"/vendor
+
+            if [ -f "$TREE_SPARSE"/odm/etc/build.prop ]; then
+                mkdir -p "$DEVICE"/vendor/odm/etc
+                mv "$TREE_SPARSE"/odm/etc/build.prop "$DEVICE"/vendor/odm/etc
+            fi
         fi
 
         # Move Vendor Interface Object manifest to proper place
