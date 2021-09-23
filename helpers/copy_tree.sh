@@ -6,10 +6,22 @@
 #
 # 1. "simg2img system.img system.raw"
 # 2. "simg2img vendor.img vendor.raw"
+# Optional (only if device supports system_ext and product):
+#      "simg2img system_ext.img system_ext.raw"
+#      "simg2img product.img product.raw"
 # 3. "mkdir ~/system ~/vendor"
+# Optional (only if device supports system_ext and product):
+#      "mkdir ~/system_ext"
+#      "mkdir ~/product"
 # 4. "sudo mount -t ext4 -o loop system.raw ~/system"
 # 5. "sudo mount -t ext4 -o loop vendor.raw ~/vendor"
+# Optional (only if device supports system_ext and product):
+#      "sudo mount -t ext4 -o loop system_ext.raw ~/system_ext"
+#      "sudo mount -t ext4 -o loop product.raw ~/product"
+#      "simg2img product.img product.raw"
 # 6. "droid-system-device/helpers/copy_tree.sh ~/system ~/vendor rpm/spec-to-modify.spec"
+# Optional (only if device supports system_ext and product):
+#      "droid-system-device/helpers/copy_tree.sh ~/system ~/vendor ~/system_ext ~/product rpm/spec-to-modify.spec"
 #
 
 if [ $# -lt 2 ]; then
@@ -140,29 +152,44 @@ if grep -q "%define multiple_rpms 1" "$modify_spec"; then
                 mv "$TREE_SPARSE"/etc/prop.default "$DEVICE"/system/etc/prop.default
             fi
         fi
-    elif [ "$TREE" = "vendor" ]; then
+    elif [ "$TREE" = "product" ] || [ "$TREE" = "vendor" ]; then
         if [ -f "$TREE_SPARSE"/build.prop ]; then
-            DEVICE=$(grep ro.vendor.product.name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
+            DEVICE=$(grep ro."$TREE".product.name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
             if [ -z "$DEVICE" ]; then
-                DEVICE=$(grep ro.product.vendor.name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
+                DEVICE=$(grep ro.product."$TREE".name "$TREE_SPARSE"/build.prop | cut -d '_' -f2)
             fi
             if [ -z "$DEVICE" ]; then
                 echo "Could not parse device name from $TREE_SPARSE/build.prop"
                 exit 1
             fi
-            mkdir -p "$DEVICE"/vendor
-            mv "$TREE_SPARSE"/build.prop "$DEVICE"/vendor
+            mkdir -p "$DEVICE"/"$TREE"
+            mv "$TREE_SPARSE"/build.prop "$DEVICE"/"$TREE"
 
             if [ -f "$TREE_SPARSE"/odm/etc/build.prop ]; then
-                mkdir -p "$DEVICE"/vendor/odm/etc
-                mv "$TREE_SPARSE"/odm/etc/build.prop "$DEVICE"/vendor/odm/etc
+                mkdir -p "$DEVICE"/"$TREE"/odm/etc
+                mv "$TREE_SPARSE"/odm/etc/build.prop "$DEVICE"/"$TREE"/odm/etc
             fi
         fi
+    elif [ "$TREE" = "system_ext" ]; then
+        if [ -f "$TREE_SPARSE"/build.prop ]; then
+            DEVICE=$(grep ro."$TREE".product.name "$TREE_SPARSE"/build.prop | cut -d '_' -f3)
+            if [ -z "$DEVICE" ]; then
+                DEVICE=$(grep ro.product."$TREE".name "$TREE_SPARSE"/build.prop | cut -d '_' -f3)
+            fi
+            if [ -z "$DEVICE" ]; then
+                echo "Could not parse device name from $TREE_SPARSE/build.prop"
+                exit 1
+            fi
+            mkdir -p "$DEVICE"/"$TREE"
+            mv "$TREE_SPARSE"/build.prop "$DEVICE"/"$TREE"
+        fi
+    fi
 
+    if [ "$TREE" = "product" ] || [ "$TREE" = "vendor" ] || [ "$TREE" = "system_ext" ]; then
         # Move Vendor Interface Object manifest to proper place
         if [ -f "$TREE_SPARSE"/etc/vintf/manifest.xml ]; then
-            mkdir -p "$DEVICE"/vendor/etc/vintf
-            mv "$TREE_SPARSE"/etc/vintf/manifest.xml "$DEVICE"/vendor/etc/vintf/manifest.xml
+            mkdir -p "$DEVICE"/"$TREE"/etc/vintf
+            mv "$TREE_SPARSE"/etc/vintf/manifest.xml "$DEVICE"/"$TREE"/etc/vintf/manifest.xml
         fi
     fi
 fi
