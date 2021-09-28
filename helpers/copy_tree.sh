@@ -49,6 +49,7 @@ fixup_buildprop() {
         fi
         if [ -n "$BUILD_USER" ] && [ -n "$BUILD_USER_REPLACEMENT" ]; then
             sed -i "s/$BUILD_USER/$BUILD_USER_REPLACEMENT/g" "$1"
+            sed -i "s/${BUILD_USER:0:6}/${BUILD_USER_REPLACEMENT:0:6}/g" "$1"
         fi
     fi
 }
