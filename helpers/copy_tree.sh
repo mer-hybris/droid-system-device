@@ -51,6 +51,8 @@ fixup_buildprop() {
             sed -i "s/$BUILD_USER/$BUILD_USER_REPLACEMENT/g" "$1"
             sed -i "s/${BUILD_USER:0:6}/${BUILD_USER_REPLACEMENT:0:6}/g" "$1"
         fi
+        # clean out AOSP from ro.product.*.model
+        sed -i -e "s/\(^ro\.product\..*\.model\)=\(.*\) (AOSP)/\1=\2/" "$1"
     fi
 }
 
