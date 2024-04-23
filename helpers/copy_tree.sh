@@ -132,9 +132,12 @@ if [ -z "$BUILD_USER" ]; then
     BUILD_USER=$(grep ro.build.user "$TREE_SPARSE"/build.prop | cut -d '=' -f2)
 fi
 
-fixup_buildprop "$TREE_SPARSE"/build.prop
-fixup_buildprop "$TREE_SPARSE"/etc/prop.default
-fixup_buildprop "$TREE_SPARSE"/odm/etc/build.prop
+for file in $(find "$TREE_SPARSE" -name build.prop 2> /dev/null); do
+    fixup_buildprop $file
+done
+for file in $(find "$TREE_SPARSE" -name prop.default 2> /dev/null); do
+    fixup_buildprop $file
+done
 
 # Move build.prop to proper place if spec file has multiple_rpms definition
 if grep -q "%define multiple_rpms 1" "$modify_spec"; then
