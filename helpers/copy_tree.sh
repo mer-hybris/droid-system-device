@@ -78,6 +78,14 @@ echo "%post" >> "$modify_spec"
 BUILD_HOST_REPLACEMENT=$(grep "%define build_host_replacement" "$modify_spec" | cut -d ' ' -f3)
 BUILD_USER_REPLACEMENT=$(grep "%define build_user_replacement" "$modify_spec" | cut -d ' ' -f3)
 
+if [ -z $BUILD_HOST_REPLACEMENT ] ; then
+    BUILD_HOST_REPLACEMENT=buildhost
+fi
+
+if [ -z $BUILD_USER_REPLACEMENT ] ; then
+    BUILD_USER_REPLACEMENT=abuild
+fi
+
 if [[ ( -n "$BUILD_HOST_REPLACEMENT" || -n "$BUILD_USER_REPLACEMENT" ) \
       && ${trees[0]//\//} != *system ]]; then
     echo "Make sure to pass .../system (avoid final slash) argument first to this script,"
