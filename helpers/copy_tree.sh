@@ -114,7 +114,7 @@ fi
 rm -f "$post_rules"
 
 pushd "$TREE_MOUNT" 1>/dev/null || exit
-find . -exec getcap {} + 2>/dev/null | awk -v tree="$TREE" '{ print "[ -e /"tree"/"$1" ] && " "setcap", $3, "/"tree"/"$1 " ||:" }' | LC_COLLATE="C" sort >> "$modify_spec"
+find . -exec getcap {} + 2>/dev/null | awk -v tree="$TREE" '{ print "[ -e /"tree"/"$1" ] && " "setcap", $2, "/"tree"/"$1 " ||:" }' | LC_COLLATE="C" sort >> "$modify_spec"
 popd 1>/dev/null || exit
 
 # Remove generic unused directories and files
