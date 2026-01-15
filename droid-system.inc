@@ -76,6 +76,7 @@ delete_files() {
 # Copy from sparse; erase any we don't want
 copy_files_from %{dsd_path}/sparse
 delete_files tmp/droid-system.files delete_file.list 1
+delete_files tmp/droid-system.files delete_file_%{rpm_device}.list 1
 
 %files -f tmp/droid-system.files
 %defattr(-,root,root,-)
