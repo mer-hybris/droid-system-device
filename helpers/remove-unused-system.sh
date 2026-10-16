@@ -9,6 +9,8 @@ fi
 
 find "$TREE_SPARSE" -name "*.apk" -delete
 find "$TREE_SPARSE" -name .gitignore -delete
+find "$TREE_SPARSE" -name Android.mk -delete
+find "$TREE_SPARSE" -name Android.bp -delete
 rm -rf "$TREE_SPARSE"/app
 rm -rf "$TREE_SPARSE"/bin/apedata_mount.sh
 rm -rf "$TREE_SPARSE"/bin/exp-log.sh
