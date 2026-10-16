@@ -48,6 +48,7 @@ rm -rf "$TREE_SPARSE"/overlay
 rm -rf "$TREE_SPARSE"/plugin
 rm -rf "$TREE_SPARSE"/priv-app
 rm -rf "$TREE_SPARSE"/recovery-from-boot.p
+rm -rf "$TREE_SPARSE"/res
 rm -rf "$TREE_SPARSE"/tts
 rm -rf "$TREE_SPARSE"/usr/hyphen-data
 rm -rf "$TREE_SPARSE"/usr/keylayout
