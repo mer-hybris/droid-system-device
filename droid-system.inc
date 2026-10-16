@@ -47,7 +47,7 @@ mkdir -p %{buildroot}
 # Retain permissions:
 rm -rf tmp/
 mkdir -p tmp/
-echo "%defattr(-,root,root,-)" > tmp/droid-system.files
+touch tmp/droid-system.files
 
 # Prefer files from sparse/ in the HA specific
 # area over sparse/ in the dsd area
@@ -78,5 +78,3 @@ copy_files_from %{dsd_path}/sparse
 delete_files tmp/droid-system.files delete_file.list 1
 
 %files -f tmp/droid-system.files
-%defattr(-,root,root,-)
-
