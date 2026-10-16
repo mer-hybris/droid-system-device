@@ -18,6 +18,18 @@
 Name:       droid-system%{variant}-%{rpm_device}
 Provides:   droid-system%{variant}
 Summary:    System%{variant} package for Droid HAL adaptations
+%if 0%{?separate_odm_rpm:1}
+Requires(post): droid-system%{variant}-%{rpm_device}-odm
+%endif
+%if 0%{?separate_product_rpm:1}
+Requires(post): droid-system%{variant}-%{rpm_device}-product
+%endif
+%if 0%{?separate_system_ext_rpm:1}
+Requires(post): droid-system%{variant}-%{rpm_device}-system_ext
+%endif
+%if 0%{?separate_vendor_rpm:1}
+Requires(post): droid-system%{variant}-%{rpm_device}-vendor
+%endif
 Version:    1
 Release:    1
 %if 0%{?system_license:1}
@@ -30,6 +42,42 @@ Source1:    droid-system%{variant}-rpmlintrc
 URL:        https://github.com/mer-hybris/droid-system-device
 %description
 %{summary}.
+
+%if 0%{?separate_odm_rpm:1}
+%package    odm
+Provides:   droid-system%{variant}-odm
+Summary:    System%{variant}-odm package for Droid HAL adaptations
+
+%description odm
+%{summary}.
+%endif
+
+%if 0%{?separate_product_rpm:1}
+%package    product
+Provides:   droid-system%{variant}-product
+Summary:    System%{variant}-product package for Droid HAL adaptations
+
+%description product
+%{summary}.
+%endif
+
+%if 0%{?separate_system_ext_rpm:1}
+%package    system_ext
+Provides:   droid-system%{variant}-system_ext
+Summary:    System%{variant}-system_ext package for Droid HAL adaptations
+
+%description system_ext
+%{summary}.
+%endif
+
+%if 0%{?separate_vendor_rpm:1}
+%package    vendor
+Provides:   droid-system%{variant}-vendor
+Summary:    System%{variant}-vendor package for Droid HAL adaptations
+
+%description vendor
+%{summary}.
+%endif
 
 %prep
 %if 0%{?_obs_build_project:1}
@@ -78,3 +126,35 @@ copy_files_from %{dsd_path}/sparse
 delete_files tmp/droid-system.files delete_file.list 1
 
 %files -f tmp/droid-system.files
+%if 0%{?separate_odm_rpm:1}
+%exclude /odm
+%endif
+%if 0%{?separate_product_rpm:1}
+%exclude /product
+%endif
+%if 0%{?separate_system_ext_rpm:1}
+%exclude /system_ext
+%endif
+%if 0%{?separate_vendor_rpm:1}
+%exclude /vendor
+%endif
+
+%if 0%{?separate_odm_rpm:1}
+%files odm
+/odm
+%endif
+
+%if 0%{?separate_product_rpm:1}
+%files product
+/product
+%endif
+
+%if 0%{?separate_system_ext_rpm:1}
+%files system_ext
+/system_ext
+%endif
+
+%if 0%{?separate_vendor_rpm:1}
+%files vendor
+/vendor
+%endif
