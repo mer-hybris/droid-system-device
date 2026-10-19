@@ -9,6 +9,8 @@ fi
 
 find "$TREE_SPARSE" -name "*.apk" -delete
 find "$TREE_SPARSE" -name .gitignore -delete
+find "$TREE_SPARSE" -name Android.mk -delete
+find "$TREE_SPARSE" -name Android.bp -delete
 rm -rf "$TREE_SPARSE"/app
 rm -rf "$TREE_SPARSE"/bin/apedata_mount.sh
 rm -rf "$TREE_SPARSE"/bin/exp-log.sh
@@ -46,6 +48,7 @@ rm -rf "$TREE_SPARSE"/overlay
 rm -rf "$TREE_SPARSE"/plugin
 rm -rf "$TREE_SPARSE"/priv-app
 rm -rf "$TREE_SPARSE"/recovery-from-boot.p
+rm -rf "$TREE_SPARSE"/res
 rm -rf "$TREE_SPARSE"/tts
 rm -rf "$TREE_SPARSE"/usr/hyphen-data
 rm -rf "$TREE_SPARSE"/usr/keylayout
